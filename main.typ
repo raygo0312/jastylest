@@ -7,7 +7,12 @@
   date: true,
   it,
 )
-// #set text(font: "Harano Aji Mincho")
-= おはよう
 
-Fermat定理は3以上の整数#math.equation("n")について，$a^n+b^n=c^n$となるような自然数$a,b,c$が存在しない．$epsilon$-$delta$
+複素関数$f(z)=u(x,y)+i v(x,y)a b$が点，$z_0=x_0+i y_0$において正則であるための必要十分条件は，$z_0$のある$epsilon$近傍$Delta(z_0,epsilon)$においてコーシー・リーマン方程式
+$
+(partial u)/(partial x)&=(partial v)/(partial y)\
+(partial u)/(partial y)&=-(partial v)/(partial x)
+$
+を満たすことである．
+
+$epsilon$-$delta$論法

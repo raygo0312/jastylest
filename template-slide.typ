@@ -15,6 +15,9 @@
     radius: 5pt,
     inset: 10pt,
   )
+
+  show math.equation: it => equation-cjk-space(it)
+
   it
 }
 

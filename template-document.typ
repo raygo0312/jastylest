@@ -1,5 +1,7 @@
 #import "template-common.typ": *
 
+#let font-size = 11pt
+
 #let jarticle(
   titlepage: false, // make a title page
   title: "", // document title
@@ -36,10 +38,13 @@
       ]
       pagebreak()
     } else {
-      text(size: 17pt)[
+      text(
+        size: 17pt,
+        font: font-sans,
+      )[
         #title
       ]
-      parbreak()
+      linebreak()
       text(size: 12pt)[
         #if office != "" [
           #office\
@@ -56,6 +61,7 @@
       ]
     }
   ]
+
   set page(numbering: "1") if titlepage
   if titlepage {
     counter(page).update(1)
@@ -64,12 +70,12 @@
   // set the fonts for text
   set text(
     font: font-serif,
-    size: 11pt
+    size: font-size,
   )
 
   // paragraph settings
   set par(
-    leading: 1em,
+    leading: 0.8em,
     first-line-indent: 1em
   )
 
@@ -80,15 +86,17 @@
       font: font-sans,
       weight: "regular",
     )
-    v(1em)
+    v(font-size)
     set par(first-line-indent: 0em)
     counter(heading).display(
       it.numbering
     )
-    h(2em)
+    h(1em)
     it.body
-    v(1em)
+    v(font-size)
   }
+
+  show math.equation: it => equation-cjk-space(it)
 
   it
 }
