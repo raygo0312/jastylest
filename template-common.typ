@@ -1,11 +1,3 @@
-// 数式とcjk文字の間に隙間を開ける処理
-// 開発者早く直せ
-#let equation-cjk-space(it) = {
-  text(size: 0pt)[\$]
-  it
-  text(size: 0pt)[\$]
-}
-
 #let font-serif = (
   "CMU Serif",
   "Harano Aji Mincho",
@@ -23,3 +15,16 @@
     stylistic-set: 01,
   )[$cal(#a)$]
 )
+
+// common style setting
+#let common-style(it) = {
+  // 数式とcjk文字の間に隙間を開ける処理
+  // 開発者早く直せ
+  show math.equation: equ => {
+    text(size: 0pt)[\$]
+    equ
+    text(size: 0pt)[\$]
+  }
+
+  it
+}

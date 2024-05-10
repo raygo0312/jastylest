@@ -59,6 +59,7 @@
           #datetime.today().year()年#datetime.today().month()月#datetime.today().day()日
         ]
       ]
+      v(10pt)
     }
   ]
 
@@ -96,7 +97,7 @@
     v(font-size)
   }
 
-  show math.equation: it => equation-cjk-space(it)
+  show: it => common-style(it)
 
   it
 }

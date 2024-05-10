@@ -1,20 +1,26 @@
 #import "template-slide.typ": *
 
-#show: it => slide-style(
-  it
-)
+#show: it => slide-style(it)
 
-// タイトルスライド
 #title-slide(
   title: "Typst",
   author: "raygo",
 )
 
 #slide(
-  title: "はじめに"
+  title: "タイトル"
 )[
-  #title-block[
+  こんな感じでスライドを作れます．
+  次のを使うとブロック生成できます．
+  #title-block(
+    title: "定理"
+  )[
     3以上の整数$n$について，次を満たす自然数$a,b,c$は存在しない．
     $ a^n+b^n=c^n scr(A) $
+  ]
+  #title-block(
+    title: "定理"
+  )[
+    ナンバリングもしてくれます．
   ]
 ]

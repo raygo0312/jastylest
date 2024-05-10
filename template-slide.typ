@@ -1,6 +1,7 @@
 #import "@preview/polylux:0.3.1": *
 #import "template-common.typ": *
 
+// slide style setting
 #let slide-style(
   it,
 ) = {
@@ -16,11 +17,12 @@
     inset: 10pt,
   )
 
-  show math.equation: it => equation-cjk-space(it)
+  show: it => common-style(it)
 
   it
 }
 
+// make title slide
 #let title-slide(
   title: "",
   author: "",
@@ -31,6 +33,7 @@
   #author
 ]
 
+// make slide
 #let slide(
   title: "",
   title-bgcolor: rgb("#DDDDFF"),
@@ -63,8 +66,8 @@
   ]
 ]
 
+// make block with title
 #let block-counter = counter("block")
-
 #let title-block(
   title: "定理",
   title-bgcolor: rgb("#DDDDFF"),
