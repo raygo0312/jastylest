@@ -14,9 +14,10 @@ VSCodeに拡張機能を入れます．
 - Typst LSP (必須)
 - Typst Preview (おすすめ)
 
-このテンプレートを使用する場合は次のフォントをインストールしてもらう必要があります．
+このテンプレートを使用する場合は次のフォントをインストールしてもらう必要があります．再起動が必要かもしれません
 - [原ノ味フォント](https://github.com/trueroad/HaranoAjiFonts)
 - [COMPUTER MODERN](https://www.fontsquirrel.com/fonts/computer-modern)
+- [katex-fonts](https://github.com/KaTeX/katex-fonts/tree/master)
 
 具体的な使い方は[公式ドキュメント](https://typst.app/docs/)か解説ブログをご覧ください。
 
@@ -26,6 +27,8 @@ VSCodeに拡張機能を入れます．
 - template-common.typ : ドキュメントとスライド共通のテンプレート
 - template-document.typ : ドキュメントを作成するためのテンプレート
 - template-slide.typ : スライドを作成するためのテンプレート
+
+テンプレートファイルのimportには絶対パスを指定できないので，ディレクトリのシンボリックリンクなどを用いてプロジェクトフォルダを作成するとよいです．
 
 ## Typstのコンパイル
 

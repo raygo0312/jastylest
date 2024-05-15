@@ -8,8 +8,15 @@
   office: "", // author's office
   author: "", // author's name
   date: false, // insert today's date
+  two-columns: false, // the number of columns in pages
   it,
 ) = {
+  // set the fonts for text
+  set text(
+    font: font-serif,
+    size: font-size,
+  )
+
   // make a title
   set page(numbering: "1") if not titlepage
   align(center)[
@@ -44,22 +51,22 @@
       )[
         #title
       ]
-      linebreak()
-      text(size: 12pt)[
+      v(0.5em)
+      text(size: font-size)[
         #if office != "" [
           #office\
         ]
         #author
       ]
-      linebreak()
+      parbreak()
       if date [
         #text(
-          size: 12pt,
+          size: font-size,
         )[
           #datetime.today().year()年#datetime.today().month()月#datetime.today().day()日
         ]
       ]
-      v(10pt)
+      v(1em)
     }
   ]
 
@@ -67,18 +74,6 @@
   if titlepage {
     counter(page).update(1)
   }
-
-  // set the fonts for text
-  set text(
-    font: font-serif,
-    size: font-size,
-  )
-
-  // paragraph settings
-  set par(
-    leading: 0.8em,
-    first-line-indent: 1em
-  )
 
   // section settings
   set heading(numbering: "1.1")
