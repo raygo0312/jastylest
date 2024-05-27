@@ -8,7 +8,7 @@
   office: "", // author's office
   author: "", // author's name
   date: false, // insert today's date
-  two-columns: false, // the number of columns in pages
+  column: 1, // two columns in pages
   it,
 ) = {
   // set the fonts for text
@@ -91,6 +91,7 @@
     it.body
     v(font-size)
   }
+  show: it => columns(column, it)
 
   show: it => common-style(it)
 

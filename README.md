@@ -30,6 +30,14 @@ VSCodeに拡張機能を入れます．
 
 テンプレートファイルのimportには絶対パスを指定できないので，ディレクトリのシンボリックリンクなどを用いてプロジェクトフォルダを作成するとよいです．
 
+Windowsのターミナルを利用してる方は次を実行してください．
+```ps1
+New-Item -ItemType SymbolicLink -Path <作業> -Name template -Target <Typst_template>
+```
+`<作業>`にはプロジェクトフォルダのパスを，`<Typst_template>`にはこのフォルダのパスを指定してください．
+
+Windows以外をお使いの方は`make_template.sh`をシンボリックリンクが作成したいフォルダ上で実行すると作成できます．
+
 ## Typstのコンパイル
 
 次の順序で作成，コンパイルします．

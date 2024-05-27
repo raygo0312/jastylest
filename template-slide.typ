@@ -7,7 +7,7 @@
 ) = {
   set page(paper: "presentation-16-9")
   set text(
-    size: 18pt,
+    size: 20pt,
     font: font-sans,
   )
   set box(
@@ -36,7 +36,7 @@
 // make slide
 #let slide(
   title: "",
-  title-bgcolor: rgb("#DDDDFF"),
+  title-bgcolor: rgb("#CCCCFF"),
   verticaly: horizon,
   doc,
 ) = polylux-slide()[
@@ -70,7 +70,7 @@
 #let block-counter = counter("block")
 #let title-block(
   title: "定理",
-  title-bgcolor: rgb("#DDDDFF"),
+  title-bgcolor: rgb("#CCCCFF"),
   bgcolor: rgb("#DDDDDD"),
   number: true,
   doc,

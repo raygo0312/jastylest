@@ -38,14 +38,14 @@
 
 文字の積はスペースを入れなければなりません．
 $
-a b c
+  a b c
 $
 関数などは$sin(theta)$のようにくっつけると出力されます．詳しくは#link("https://typst.app/docs/")[公式ドキュメント]
 
 フォント紹介
 #let full = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 $
-cal(full)\
-scr(full)\
-frak(full)
+  cal(full)\
+  scr(full)\
+  frak(full)
 $
