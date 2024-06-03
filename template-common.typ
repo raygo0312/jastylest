@@ -15,26 +15,24 @@
 #let common-style(it) = {
   // 数式とcjk文字の間に隙間を開ける処理
   show math.equation : equ => {
-    text(size: 0pt)[\$]
+    text(size: 0.000000001pt)[\$]
     equ
-    text(size: 0pt)[\$]
+    text(size: 0.000000001pt)[\$]
   }
   show "(" : lp => {
-    text(size: 0pt)[\$]
+    text(size: 0.000000001pt)[\$]
     lp
   }
   show ")" : lp => {
     lp
-    text(size: 0pt)[\$]
+    text(size: 0.000000001pt)[\$]
   }
   // 開発者早く直せ
-
-  // paragraph settings
-  set par(
-    leading: 0.8em,
-    first-line-indent: 1em,
-    justify: true,
-  )
+  show math.equation.where(block: true) : it => {
+    v(-1em)
+    it
+    v(-1em)
+  }
   show link: underline
 
   show "LaTeX": box(

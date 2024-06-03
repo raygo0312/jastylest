@@ -92,6 +92,12 @@
     v(font-size)
   }
   show: it => columns(column, it)
+  // paragraph settings
+  set par(
+    leading: 0.8em,
+    first-line-indent: 1em,
+    justify: true,
+  )
 
   show: it => common-style(it)
 

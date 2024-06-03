@@ -5,7 +5,14 @@
 #let slide-style(
   it,
 ) = {
-  set page(paper: "presentation-16-9")
+  set page(
+    paper: "presentation-16-9",
+    margin: (
+      top: 50pt,
+      bottom: 0pt,
+      left: 50pt,
+    ),
+  )
   set text(
     size: 20pt,
     font: font-sans,
@@ -44,8 +51,8 @@
   #v(10pt)
   #place(
     top + left,
-    dx: -55pt,
-    dy: -55pt,
+    dx: -50pt,
+    dy: -50pt,
   )[
     #block(
       width: 840pt,
@@ -72,7 +79,7 @@
   title: "定理",
   title-bgcolor: rgb("#CCCCFF"),
   bgcolor: rgb("#DDDDDD"),
-  number: true,
+  number: false,
   doc,
 ) = {
   if number {
@@ -85,7 +92,7 @@
       inset: 10pt,
       spacing: 0pt,
     )[
-      == #title #if number {
+      #title #if number {
         block-counter.display()
       }
     ]
