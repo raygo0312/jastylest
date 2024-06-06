@@ -66,15 +66,14 @@
   #doc
   #place(
     bottom + right,
-    dx: 40pt,
-    dy: 40pt,
+    dx: 30pt,
+    dy: -10pt,
   )[
     #counter(page).display("1")
   ]
 ]
 
 // make block with title
-#let block-counter = counter("block")
 #let title-block(
   title: "定理",
   title-bgcolor: rgb("#CCCCFF"),
@@ -83,7 +82,7 @@
   doc,
 ) = {
   if number {
-    block-counter.step()
+    counter("title-block").step()
   }
   block()[
     #block(
@@ -93,7 +92,7 @@
       spacing: 0pt,
     )[
       #title #if number {
-        block-counter.display()
+        counter("title-block").display()
       }
     ]
     #block(
