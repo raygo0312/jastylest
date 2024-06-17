@@ -10,6 +10,11 @@
   date: false, // insert today's date
   it,
 ) = {
+  set document(
+    title: title,
+    author: author,
+    date: datetime.today()
+  )
   // set the fonts for text
   set text(
     font: font-serif,
@@ -17,62 +22,62 @@
   )
 
   // make a title
-  // set page(numbering: "1") if not titlepage
-  // align(center)[
-  //   #if titlepage {
-  //     v(100pt)
-  //     text(
-  //       size: 25pt,
-  //       font: font-sans,
-  //     )[
-  //       #title
-  //     ]
-  //     v(100pt)
-  //     text(
-  //       size: 16pt,
-  //     )[
-  //       #office\
-  //       #author
-  //     ]
-  //     v(100pt)
-  //     if date [
-  //       #text(
-  //         size: 16pt,
-  //       )[
-  //         #datetime.today().year()年#datetime.today().month()月#datetime.today().day()日
-  //       ]
-  //     ]
-  //     pagebreak()
-  //   } else {
-  //     text(
-  //       size: 17pt,
-  //       font: font-sans,
-  //     )[
-  //       #title
-  //     ]
-  //     v(0.5em)
-  //     text(size: font-size)[
-  //       #if office != "" [
-  //         #office\
-  //       ]
-  //       #author
-  //     ]
-  //     parbreak()
-  //     if date [
-  //       #text(
-  //         size: font-size,
-  //       )[
-  //         #datetime.today().year()年#datetime.today().month()月#datetime.today().day()日
-  //       ]
-  //     ]
-  //     v(1em)
-  //   }
-  // ]
+  set page(numbering: "1") if not titlepage
+  align(center)[
+    #if titlepage {
+      v(100pt)
+      text(
+        size: 25pt,
+        font: font-sans,
+      )[
+        #title
+      ]
+      v(100pt)
+      text(
+        size: 16pt,
+      )[
+        #office\
+        #author
+      ]
+      v(100pt)
+      if date [
+        #text(
+          size: 16pt,
+        )[
+          #datetime.today().year()年#datetime.today().month()月#datetime.today().day()日
+        ]
+      ]
+      pagebreak()
+    } else {
+      text(
+        size: 17pt,
+        font: font-sans,
+      )[
+        #title
+      ]
+      v(0.5em)
+      text(size: font-size)[
+        #if office != "" [
+          #office\
+        ]
+        #author
+      ]
+      parbreak()
+      if date [
+        #text(
+          size: font-size,
+        )[
+          #datetime.today().year()年#datetime.today().month()月#datetime.today().day()日
+        ]
+      ]
+      v(1em)
+    }
+  ]
 
-  // set page(numbering: "1") if titlepage
-  // if titlepage {
-  //   counter(page).update(1)
-  // }
+  set page(numbering: "1") if titlepage
+  if titlepage {
+    counter(page).update(1)
+  }
 
   // // section settings
   set heading(numbering: "1.1")
