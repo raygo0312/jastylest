@@ -36,7 +36,7 @@
   $#it$
 ]
 #let mh = h(1em)
-// 定理環境
+定理環境
 #let ex(it) = box(
   width: 100%,
   stroke: rgb("#000000"),
@@ -70,14 +70,6 @@
     equ
     text(size: 0.000000001pt)[\$]
   }
-  show "(" : lp => {
-    text(size: 0.000000001pt)[\$]
-    lp
-  }
-  show ")" : lp => {
-    lp
-    text(size: 0.000000001pt)[\$]
-  }
 
   show math.equation.where(block: true) : it => {
     v(-1em)
@@ -85,15 +77,6 @@
     v(-1em)
   }
   show link: underline
-
-  show "LaTeX": box(
-    width: 2.7em,
-    height: 1em,
-    baseline: 0.25em,
-    stroke: none,
-    inset: 0pt,
-    image("img/LaTeX_logo.svg", width: 100%)
-  )
 
   it
 }

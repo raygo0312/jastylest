@@ -8,7 +8,6 @@
   office: "", // author's office
   author: "", // author's name
   date: false, // insert today's date
-  column: 1, // two columns in pages
   it,
 ) = {
   // set the fonts for text
@@ -18,64 +17,64 @@
   )
 
   // make a title
-  set page(numbering: "1") if not titlepage
-  align(center)[
-    #if titlepage {
-      v(100pt)
-      text(
-        size: 25pt,
-        font: font-sans,
-      )[
-        #title
-      ]
-      v(100pt)
-      text(
-        size: 16pt,
-      )[
-        #office\
-        #author
-      ]
-      v(100pt)
-      if date [
-        #text(
-          size: 16pt,
-        )[
-          #datetime.today().year()年#datetime.today().month()月#datetime.today().day()日
-        ]
-      ]
-      pagebreak()
-    } else {
-      text(
-        size: 17pt,
-        font: font-sans,
-      )[
-        #title
-      ]
-      v(0.5em)
-      text(size: font-size)[
-        #if office != "" [
-          #office\
-        ]
-        #author
-      ]
-      parbreak()
-      if date [
-        #text(
-          size: font-size,
-        )[
-          #datetime.today().year()年#datetime.today().month()月#datetime.today().day()日
-        ]
-      ]
-      v(1em)
-    }
-  ]
+  // set page(numbering: "1") if not titlepage
+  // align(center)[
+  //   #if titlepage {
+  //     v(100pt)
+  //     text(
+  //       size: 25pt,
+  //       font: font-sans,
+  //     )[
+  //       #title
+  //     ]
+  //     v(100pt)
+  //     text(
+  //       size: 16pt,
+  //     )[
+  //       #office\
+  //       #author
+  //     ]
+  //     v(100pt)
+  //     if date [
+  //       #text(
+  //         size: 16pt,
+  //       )[
+  //         #datetime.today().year()年#datetime.today().month()月#datetime.today().day()日
+  //       ]
+  //     ]
+  //     pagebreak()
+  //   } else {
+  //     text(
+  //       size: 17pt,
+  //       font: font-sans,
+  //     )[
+  //       #title
+  //     ]
+  //     v(0.5em)
+  //     text(size: font-size)[
+  //       #if office != "" [
+  //         #office\
+  //       ]
+  //       #author
+  //     ]
+  //     parbreak()
+  //     if date [
+  //       #text(
+  //         size: font-size,
+  //       )[
+  //         #datetime.today().year()年#datetime.today().month()月#datetime.today().day()日
+  //       ]
+  //     ]
+  //     v(1em)
+  //   }
+  // ]
 
-  set page(numbering: "1") if titlepage
-  if titlepage {
-    counter(page).update(1)
-  }
+  // set page(numbering: "1") if titlepage
+  // if titlepage {
+  //   counter(page).update(1)
+  // }
 
-  // section settings
+  // // section settings
   set heading(numbering: "1.1")
   show heading: it => {
     set text(
@@ -91,7 +90,6 @@
     it.body
     v(font-size)
   }
-  show: it => columns(column, it)
   // paragraph settings
   set par(
     leading: 0.8em,
