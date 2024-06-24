@@ -10,73 +10,67 @@
 // 数式コマンド
 #let cal(a) = text(font: "KaTeX_Caligraphic")[#a]
 #let scr(a) = text(font: "KaTeX_Script")[#a]
-// 数式環境のデコレーション関数
-#let mbox(
-  it,
-) = box(
-  stroke: rgb("#000000"),
-  inset: 0.2em,
-  baseline: 0.2em,
-  radius: 0.3em,
-)[
-  $#it$
-]
-#let red(
-  it,
-) = text(
-  fill: rgb("#FF0000"),
-)[
-  $#it$
-]
-#let blue(
-  it,
-) = text(
-  fill: rgb("#0000FF"),
-)[
-  $#it$
-]
-#let mh = h(1em)
-定理環境
-#let ex(it) = box(
-  width: 100%,
-  stroke: rgb("#000000"),
-  radius: 5pt,
-  inset: 10pt,
-)[
-  #counter("ex").step()
-  例#counter("ex").display()\
-  #it
-]
-#let pro(it) = {
-  grid(
-    columns: 2,
-    gutter: 10pt,
-    {
-      counter("pro").step()
-      "("
-      counter("pro").display()
-      ")"
-    },
-    it
-  )
-  v(1em)
-}
+
 // common style setting
 #let common-style(it) = {
-  // 数式とcjk文字の間に隙間を開ける処理
-  // 開発者早く直せ
-  show math.equation : equ => {
-    text(size: 0.000000001pt)[\$]
-    equ
-    text(size: 0.000000001pt)[\$]
+  // 設定日本語
+  set text(lang: "ja")
+
+  // リンクに下線を引く
+  show link: underline
+  // インデント設定
+  set list(indent: 1.5em)
+  set enum(indent: 1.5em)
+  // 表のキャプションを上に
+  show figure.where(
+    kind: table
+  ): set figure.caption(position: top)
+
+  // 数式外の丸括弧の外側に隙間を開ける処理
+  let cjk = "(\p{Hiragana}|\p{Katakana}|\p{Han})"
+  show regex("("+cjk+"[(])|([)]"+cjk+")") : it => {
+    let a = it.text.match(regex("(.)(.)"))
+    a.captures.at(0)
+    h(0.25em)
+    a.captures.at(1)
   }
 
-  show math.equation.where(block: true) : it => {
-    v(-1em)
+  // 数式とcjk文字の間に隙間を開ける処理
+  show math.equation: it => { // ごり押し
+    text(size: 0.000000001pt)[\$]
     it
-    v(-1em)
+    text(size: 0.000000001pt)[\$]
   }
-  show link: underline
+  // show: it => { // 探索 (上手くいかない)
+  //   let it = it.children
+  //   for (i, j) in it.enumerate() {
+  //     if j == () {
+  //       continue
+  //     }
+  //     if repr(j.func()) == "equation" {
+  //       if i != 0 {
+  //         let a = it.at(i - 1)
+  //         if a.has("text") and a.text.ends-with(regex(cjk)) {
+  //           h(0.25em)
+  //         }
+  //       }
+  //       j
+  //       if i != it.len() - 1 {
+  //         let a = it.at(i + 1)
+  //         if a.has("text") and a.text.starts-with(regex(cjk)) {
+  //           h(0.25em)
+  //         }
+  //       }
+  //     } else {
+  //       j
+  //     }
+  //   }
+  // }
+  // block数式の中のfracをdisplayに変更
+  show math.equation.where(block: true): it => {
+    show math.frac: math.display
+    it
+  }
 
   it
 }

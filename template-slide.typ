@@ -1,6 +1,7 @@
 #import "@preview/polylux:0.3.1": *
 #import "template-common.typ": *
 
+#let theme-color = rgb("#AADDFF")
 // slide style setting
 #let slide-style(
   it,
@@ -19,7 +20,7 @@
   )
   set box(
     width: 100%,
-    stroke: rgb("#3377FF"),
+    stroke: theme-color,
     radius: 5pt,
     inset: 10pt,
   )
@@ -43,7 +44,6 @@
 // make slide
 #let slide(
   title: "",
-  title-bgcolor: rgb("#CCCCFF"),
   verticaly: horizon,
   doc,
 ) = polylux-slide()[
@@ -57,7 +57,7 @@
     #block(
       width: 840pt,
       height: 50pt,
-      fill: title-bgcolor,
+      fill: theme-color,
       inset: 15pt,
     )[
       = #h(10pt)#title
@@ -76,8 +76,6 @@
 // make block with title
 #let title-block(
   title: "定理",
-  title-bgcolor: rgb("#CCCCFF"),
-  bgcolor: rgb("#DDDDDD"),
   number: false,
   doc,
 ) = {
@@ -87,7 +85,8 @@
   block()[
     #block(
       width: 100%,
-      fill: title-bgcolor,
+      fill: theme-color,
+      stroke: theme-color,
       inset: 10pt,
       spacing: 0pt,
     )[
@@ -97,7 +96,7 @@
     ]
     #block(
       width: 100%,
-      fill: bgcolor,
+      stroke: theme-color,
       inset: 10pt,
       spacing: 0pt,
     )[
