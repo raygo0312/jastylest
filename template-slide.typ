@@ -34,9 +34,10 @@
 #let title-slide(
   title: "",
   author: "",
+  outlined: true,
 ) = polylux-slide()[
   #set align(horizon + center)
-  = #title
+  #heading(outlined: outlined)[#title]
   #v(10pt)
   #author
 ]
@@ -45,6 +46,7 @@
 #let slide(
   title: "",
   verticaly: horizon,
+  outlined: false,
   doc,
 ) = polylux-slide()[
   #set align(verticaly)
@@ -60,7 +62,7 @@
       fill: theme-color,
       inset: 15pt,
     )[
-      = #h(10pt)#title
+      #heading(level: 2,outlined: outlined)[#title]
     ]
   ]
   #doc
@@ -71,6 +73,19 @@
   )[
     #counter(page).display("1")
   ]
+]
+
+// make index slide
+#let make-index() = slide(
+  title: "目次",
+  verticaly: horizon,
+)[
+  #set text()
+  #set box(stroke: none)
+  #outline(
+    title: "",
+    indent: 1em,
+  )
 ]
 
 // make block with title

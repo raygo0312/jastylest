@@ -1,4 +1,4 @@
-template-common.pdf
-template-document.pdf
-template-slide.pdf
+*.pdf
+!main.pdf
+!slide.pdf
 command.ps1

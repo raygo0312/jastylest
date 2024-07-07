@@ -7,6 +7,8 @@
   author: "raygo",
 )
 
+#make-index()
+
 #slide(
   title: "タイトル"
 )[

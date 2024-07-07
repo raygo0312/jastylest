@@ -8,6 +8,7 @@
   office: "", // author's office
   author: "", // author's name
   date: false, // insert today's date
+  column: false,
   it,
 ) = {
   set document(
@@ -101,6 +102,14 @@
     first-line-indent: 1em,
     justify: true,
   )
+
+  show: it => {
+    if column {
+      columns(2)[#it]
+    } else {
+      it
+    }
+  }
 
   show: it => common-style(it)
 
