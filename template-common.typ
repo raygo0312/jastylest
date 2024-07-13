@@ -47,9 +47,9 @@
   // 数式とcjk文字の間に隙間を開ける処理
   show math.equation: it => {
     // size0にするとpreviewででかく表示されるバグがある
-    text(size: 0.00000000000001pt)[\$]
+    hide[#text(size: 0.00000000000001pt)[\$]]
     it
-    text(size: 0.00000000000001pt)[\$]
+    hide[#text(size: 0.00000000000001pt)[\$]]
   }
 
   it

@@ -1,6 +1,7 @@
 #import "@preview/polylux:0.3.1": *
 #import "template-common.typ": *
 
+#let margin = 50pt
 #let theme-color = rgb("#AADDFF")
 // slide style setting
 #let slide-style(
@@ -8,21 +9,15 @@
 ) = {
   set page(
     paper: "presentation-16-9",
-    margin: (
-      top: 50pt,
-      bottom: 0pt,
-      left: 50pt,
-    ),
+    width: 960pt,
+    height: 540pt,
+    margin: (rest: margin),
+    // numbering: "1/1",
+    // number-align: right + bottom,
   )
   set text(
-    size: 20pt,
+    size: 24pt,
     font: font-sans,
-  )
-  set box(
-    width: 100%,
-    stroke: theme-color,
-    radius: 5pt,
-    inset: 10pt,
   )
 
   show: it => common-style(it)
@@ -35,7 +30,7 @@
   title: "",
   author: "",
   outlined: true,
-) = polylux-slide()[
+) = polylux-slide[
   #set align(horizon + center)
   #heading(outlined: outlined)[#title]
   #v(10pt)
@@ -48,44 +43,42 @@
   verticaly: horizon,
   outlined: false,
   doc,
-) = polylux-slide()[
-  #set align(verticaly)
-  #v(10pt)
-  #place(
-    top + left,
-    dx: -50pt,
-    dy: -50pt,
-  )[
-    #block(
-      width: 840pt,
-      height: 50pt,
-      fill: theme-color,
-      inset: 15pt,
+) = polylux-slide[
+  // #v(10pt)
+  #context{
+    // バグ：本来置かれる位置に移動するため、本文の位置を調節するため
+    hide[\$]
+    place(
+      top + left,
+      dx: -margin,
+      dy: -margin,
     )[
-      #heading(level: 2,outlined: outlined)[#title]
+      #block(
+        width: page.width,
+        height: 2em,
+        fill: theme-color,
+        inset: 0.5em,
+      )[
+        #heading(level: 2,outlined: outlined)[#title]
+      ]
     ]
-  ]
+  }
+  #set align(verticaly)
   #doc
   #place(
-    bottom + right,
-    dx: 30pt,
-    dy: -10pt,
+    right + bottom,
+    dx: margin - 20pt,
+    dy: margin - 20pt,
   )[
-    #counter(page).display("1")
+    #logic.logical-slide.display()/#utils.last-slide-number
   ]
 ]
 
 // make index slide
 #let make-index() = slide(
   title: "目次",
-  verticaly: horizon,
 )[
-  #set text()
-  #set box(stroke: none)
-  #outline(
-    title: "",
-    indent: 1em,
-  )
+  #utils.polylux-outline()
 ]
 
 // make block with title
