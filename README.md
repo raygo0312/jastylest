@@ -11,8 +11,8 @@ Typstの日本語テンプレートを作成しました．修正点があれば
 を参照してください．
 
 VSCodeにどちらかの拡張機能を入れます．
-- Tinymist (おすすめ)
-- Typst LSP
+- Typst LSP (公式)
+- Tinymist Typst (おすすめ)
 
 このテンプレートを使用する場合は次のフォントをインストールしてもらう必要があります．再起動が必要かもしれません
 - [原ノ味フォント](https://github.com/trueroad/HaranoAjiFonts)
@@ -34,6 +34,13 @@ version = "0.1.0"
 entrypoint = "template/template.typ"
 authors = ["raygo"]
 ```
+
+## Tinymistの使い方
+詳しくは[こちら](https://marketplace.visualstudio.com/items?itemName=myriad-dreamin.tinymist)を参照してください．
+- 右上の虫眼鏡がついているアイコンをクリックするとプレビューが開きます．
+- typstファイルの先頭にある`Export PDF`をクリックするとPDFに変換されます．
+- 設定ファイルに`"tinymist.formatterMode": "typstyle"`を書き込むとフォーマットされます．
+
 
 ## ドキュメントの作成
 
