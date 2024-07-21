@@ -29,10 +29,9 @@
 #let title-slide(
   title: "",
   author: "",
-  outlined: true,
 ) = polylux-slide[
   #set align(horizon + center)
-  #heading(outlined: outlined)[#title]
+  = #title
   #v(10pt)
   #author
 ]
@@ -41,7 +40,6 @@
 #let slide(
   title: "",
   verticaly: horizon,
-  outlined: false,
   doc,
 ) = polylux-slide[
   // #v(10pt)
@@ -59,7 +57,7 @@
         fill: theme-color,
         inset: 0.5em,
       )[
-        #heading(level: 2,outlined: outlined)[#title]
+        == #title
       ]
     ]
   }

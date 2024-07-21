@@ -10,9 +10,9 @@ Typstの日本語テンプレートを作成しました．修正点があれば
 
 を参照してください．
 
-VSCodeに拡張機能を入れます．
-- Typst LSP (必須)
-- Typst Preview (おすすめ)
+VSCodeにどちらかの拡張機能を入れます．
+- Tinymist (おすすめ)
+- Typst LSP
 
 このテンプレートを使用する場合は次のフォントをインストールしてもらう必要があります．再起動が必要かもしれません
 - [原ノ味フォント](https://github.com/trueroad/HaranoAjiFonts)
@@ -23,27 +23,17 @@ VSCodeに拡張機能を入れます．
 
 ## テンプレートファイル
 
-テンプレートファイルには次のものがあります．
-- template-common.typ : ドキュメントとスライド共通のテンプレート
-- template-document.typ : ドキュメントを作成するためのテンプレート
-- template-slide.typ : スライドを作成するためのテンプレート
-
-テンプレートファイルのimportには絶対パスを指定できないので，ディレクトリのシンボリックリンクなどを用いてプロジェクトフォルダを作成するとよいです．
-
-Windowsのターミナルを利用してる方はターミナルを管理者権限で実行し，次のコマンドを実行．次を作成したいフォルダ上で実行してください．
-```ps1
-Set-ExecutionPolicy RemoteSigned
+テンプレートファイルのimportには絶対パスを指定できないので，パッケージとしてあげます．詳しくは[こちら](https://github.com/typst/packages?tab=readme-ov-file#local-packages)を参照してください．
+1. dataディレクトリに`typst/packages/local/japanese-template/0.1.0/typst.toml`を作成します．
+1. 以下のコードを入力します．
+1. `typst.toml`と同じディレクトリ内にこのリポジトリを`template`という名前でシンボリックリンクを作成します．
+```toml
+[package]
+name = "japanese-template"
+version = "0.1.0"
+entrypoint = "template/template.typ"
+authors = ["raygo"]
 ```
-`<作業>`にはプロジェクトフォルダのパスを，`<Typst_template>`にはこのフォルダのパスを指定してください．
-
-Windows以外をお使いの方は`make_template.sh`をシンボリックリンクが作成したいフォルダ上で実行すると作成できます．
-
-## Typstのコンパイル
-
-次の順序で作成，コンパイルします．
-1. 拡張子を`typ`にしてファイルを作成します．
-1. ファイルを書き込みます．Typst Previewを入れている場合は，VSCodeの右上に表示されている虫眼鏡がついた分割ページのアイコンをクリック，またはコマンド`Typst: Show the compiled PDF of the currently opened typst file`を入力すると，リアルタイムでコンパイルされたドキュメントを確認しながらコーディングできます．
-1. 書き込んだファイルを`ctrl+s`で保存すると同名のPDFファイルが作成されます．
 
 ## ドキュメントの作成
 
@@ -52,7 +42,7 @@ Windows以外をお使いの方は`make_template.sh`をシンボリックリン�
 次のコードを冒頭に入力します．その下に出力したい内容を入力します．
 
 ```Typst
-#import "./template-document.typ": *
+#import "@local/japanese-template:0.1.0": *
 
 #show: it => jarticle(
   title: "タイトル",
@@ -90,7 +80,7 @@ Default: `false`
 次のコードを冒頭に入力します．その下に出力したい内容を入力します．
 
 ```Typst
-#import "template-slide.typ": *
+#import "@local/japanese-template:0.1.0": *
 
 #show: it => slide-style(it)
 ```

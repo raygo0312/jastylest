@@ -1,4 +1,4 @@
-#import "template-document.typ": *
+#import "@local/japanese-template:0.1.0": *
 
 #show: it => jarticle(
   // titlepage: true,
