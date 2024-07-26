@@ -2,7 +2,6 @@
 #import "template-common.typ": *
 
 #let margin = 50pt
-#let theme-color = rgb("#AADDFF")
 // slide style setting
 #let slide-style(
   it,
@@ -42,8 +41,7 @@
   verticaly: horizon,
   doc,
 ) = polylux-slide[
-  // #v(10pt)
-  #context{
+  #context {
     // バグ：本来置かれる位置に移動するため、本文の位置を調節するため
     hide[\$]
     place(
@@ -54,7 +52,7 @@
       #block(
         width: page.width,
         height: 2em,
-        fill: theme-color,
+        fill: theme-color.at("title").get(),
         inset: 0.5em,
       )[
         == #title
@@ -73,9 +71,7 @@
 ]
 
 // make index slide
-#let make-index() = slide(
-  title: "目次",
-)[
+#let make-index() = slide(title: "目次")[
   #utils.polylux-outline()
 ]
 
@@ -83,30 +79,39 @@
 #let title-block(
   title: "定理",
   number: false,
+  color: "thm",
   doc,
 ) = {
   if number {
     counter("title-block").step()
   }
-  block()[
-    #block(
-      width: 100%,
-      fill: theme-color,
-      stroke: theme-color,
-      inset: 10pt,
-      spacing: 0pt,
-    )[
-      #title #if number {
-        counter("title-block").display()
-      }
+  context {
+    block()[
+      #block(
+        width: 100%,
+        fill: theme-color.at(color).get(),
+        stroke: theme-color.at(color).get(),
+        inset: 10pt,
+        spacing: 0pt,
+      )[
+        #title #if number {
+          let section = utils.sections-state.get().len()
+          if section != 0 {
+            str(section)
+            "."
+          }
+          counter("title-block").display()
+        }
+      ]
+      #block(
+        width: 100%,
+        fill: theme-color.at(color).get().transparentize(70%),
+        stroke: theme-color.at(color).get(),
+        inset: 10pt,
+        spacing: 0pt,
+      )[
+        #doc
+      ]
     ]
-    #block(
-      width: 100%,
-      stroke: theme-color,
-      inset: 10pt,
-      spacing: 0pt,
-    )[
-      #doc
-    ]
-  ]
+  }
 }
