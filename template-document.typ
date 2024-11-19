@@ -8,14 +8,10 @@
   office: "", // author's office
   author: "", // author's name
   date: false, // insert today's date
+  heading-numbering: true, // numbering for headings
   column: false,
   it,
 ) = {
-  set document(
-    title: title,
-    author: author,
-    date: datetime.today()
-  )
   // set the fonts for text
   set text(
     font: font-serif,
@@ -34,17 +30,13 @@
         #title
       ]
       v(100pt)
-      text(
-        size: 16pt,
-      )[
+      text(size: 16pt)[
         #office\
         #author
       ]
       v(100pt)
       if date [
-        #text(
-          size: 16pt,
-        )[
+        #text(size: 16pt)[
           #datetime.today().year()年#datetime.today().month()月#datetime.today().day()日
         ]
       ]
@@ -65,9 +57,7 @@
       ]
       parbreak()
       if date [
-        #text(
-          size: font-size,
-        )[
+        #text(size: font-size)[
           #datetime.today().year()年#datetime.today().month()月#datetime.today().day()日
         ]
       ]
@@ -80,7 +70,7 @@
     counter(page).update(1)
   }
 
-  // // section settings
+  // section settings
   set heading(numbering: "1.1")
   show heading: it => {
     set text(
@@ -89,10 +79,10 @@
     )
     v(font-size)
     set par(first-line-indent: 0em)
-    counter(heading).display(
-      it.numbering
-    )
-    h(1em)
+    if heading-numbering {
+      counter(heading).display(it.numbering)
+      h(1em)
+    }
     it.body
     v(font-size)
   }

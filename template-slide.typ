@@ -1,6 +1,47 @@
 #import "@preview/polylux:0.3.1": *
 #import "template-common.typ": *
 
+// color setting
+#let theme-color = (
+  title: state("title", rgb("#66a5ad")),
+  ex: state("ex", rgb("#e3e2b4")),
+  axm: state("axm", rgb("#f4acb7")),
+  def: state("def", rgb("#bfc8d7")),
+  thm: state("thm", rgb("#a2b59f")),
+  other: state("other", rgb("#000000")),
+)
+#let preset-color = (
+  pastel: (
+    title: rgb("#fbd8b5"),
+    ex: rgb("#f9f8c4"),
+    axm: rgb("#f8ced3"),
+    def: rgb("#d2d5ec"),
+    thm: rgb("#daecd4"),
+  ),
+  dark: (
+    title: rgb("#483b6d"),
+    ex: rgb("#53531f"),
+    axm: rgb("#612828"),
+    def: rgb("#2b4263"),
+    thm: rgb("#2b5e24"),
+  ),
+)
+#let change-color(
+  theme: "",
+  name: "title",
+  color: rgb("#AADDFF"),
+) = {
+  if preset-color.keys().contains(theme) {
+    for (key, value) in preset-color.at(theme) {
+      change-color(name: key, color: value)
+    }
+    return
+  }
+  theme-color.at(name).update(x => {
+    color
+  })
+}
+
 #let margin = 50pt
 // slide style setting
 #let slide-style(
@@ -11,22 +52,36 @@
     width: 960pt,
     height: 540pt,
     margin: (rest: margin),
-    // numbering: "1/1",
-    // number-align: right + bottom,
   )
   set text(
     size: 24pt,
     font: font-sans,
   )
+  // title-blockのラベリング
+  show ref: it => {
+    if it.element != none and it.element.children.at(0).at("key") == "slide" {
+      numbering(
+        "1.1",
+        ..counter("slide").get(),
+      )
+    }
+  }
 
   show: it => common-style(it)
 
   it
 }
 
+// セクションに関する関数
+#let section(section) = {
+  utils.register-section(section)
+  counter("slide").step()
+}
+#let section-name = utils.current-section
+
 // make title slide
 #let title-slide(
-  title: "",
+  title,
   author: "",
 ) = polylux-slide[
   #set align(horizon + center)
@@ -37,7 +92,7 @@
 
 // make slide
 #let slide(
-  title: "",
+  title: section-name,
   verticaly: horizon,
   doc,
 ) = polylux-slide[
@@ -77,32 +132,30 @@
 
 // make block with title
 #let title-block(
-  title: "定理",
+  title: "",
   number: false,
-  color: "thm",
+  color: "title",
   doc,
 ) = {
   if number {
-    counter("title-block").step()
+    counter("slide").step(level: 2)
+    let title-name = state("title-name", title)
   }
   context {
     block()[
-      #block(
-        width: 100%,
-        fill: theme-color.at(color).get(),
-        stroke: theme-color.at(color).get(),
-        inset: 10pt,
-        spacing: 0pt,
-      )[
-        #title #if number {
-          let section = utils.sections-state.get().len()
-          if section != 0 {
-            str(section)
-            "."
+      #if title != "" {
+        block(
+          width: 100%,
+          fill: theme-color.at(color).get(),
+          stroke: theme-color.at(color).get(),
+          inset: 10pt,
+          spacing: 0pt,
+        )[
+          #title #if number {
+            counter("slide").display()
           }
-          counter("title-block").display()
-        }
-      ]
+        ]
+      }
       #block(
         width: 100%,
         fill: theme-color.at(color).get().transparentize(70%),

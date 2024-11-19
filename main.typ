@@ -2,9 +2,9 @@
 
 #show: it => jarticle(
   // titlepage: true,
-  title: "Typst",
-  office: "電気通信大学 情報理工学研究科 情報数理工学",
-  author: "2400000 raygo",
+  title: [Typst],
+  office: [電気通信大学 情報理工学研究科 情報数理工学],
+  author: [2400000 raygo],
   date: true,
   // column: true,
   it,
@@ -37,9 +37,7 @@
 集合$A$の部分集合族$A in scr(A)$．ただし，$scr(A)subset 2^A$である．
 
 文字の積はスペースを入れなければなりません．
-$
-  a b c
-$
+$ a b c $
 関数などは$sin(theta)$のようにくっつけると出力されます．詳しくは#link("https://typst.app/docs/")[公式ドキュメント]
 
 フォント紹介
