@@ -1,9 +1,12 @@
 #import "@local/japanese-template:0.1.0": *
 
-#show: it => slide-style(it)
+#show: it => slide-style(
+  // handout: true, // handoutをtrueにすると動的スライドが無効化される
+  it,
+)
 
 #title-slide(
-  "Typst",
+  title: "Typst",
   author: "raygo",
 )
 
@@ -19,9 +22,10 @@
     $ a^n+b^n=c^n $
     を満たす自然数$a,b,c$は存在しない．
   ]
+
 ]
 
-#slide()[
+#slide[
   こんな感じで2枚目のスライドも作れます．
   #title-block(
     title: "例",
@@ -46,6 +50,17 @@
     color: "thm",
   )[]
 ]
+
+#slide[
+  動的なスライドも作れます．
+
+  詳しくは#link("https://polylux.dev/book/dynamic/dynamic.html")[polyluxの公式ドキュメント]を参照してください．
+  #item-by-item[
+    - first
+    - second
+    - third
+  ]
+]
 // これで色を変えられます
 #set page(fill: rgb("#000000"))
 #set text(fill: rgb("#ffffff"))
@@ -57,7 +72,7 @@
 
 #section("ダークテーマ")
 
-#slide()[
+#slide[
   #title-block(
     title: "例",
     number: true,
@@ -89,11 +104,11 @@
 
 #set page(fill: rgb("#ffffff"))
 #set text(fill: rgb("#000000"))
-// 既存のテーマも選べます
+// 既存のテーマで色を一括に変更することもできます
 #change-color(theme: "pastel")
 #section("パステルテーマ")
 
-#slide()[
+#slide[
   #title-block(
     title: "例",
     number: true,
@@ -121,7 +136,7 @@
   )[]
 ]
 
-#slide()[
+#slide[
   #change-color(name: "other", color: red)
   #title-block(
     title: "例",

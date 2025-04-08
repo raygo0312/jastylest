@@ -11,7 +11,7 @@
     padding: 0.2em,
   ),
   line-stroke: 0.5pt,
-  ..rules
+  ..rules,
 ) = context {
   // Check parameters and compute normalized settings
   let settings = {
@@ -24,18 +24,30 @@
     // Check the types of the parameters.
     assert(
       type(spacing) == "dictionary",
-      message: "The value `" + repr(spacing) + "` of the `spacing` argument was expected"
-        + "to have type `dictionary` but instead had type `" + type(spacing) + "`."
+      message: "The value `"
+        + repr(spacing)
+        + "` of the `spacing` argument was expected"
+        + "to have type `dictionary` but instead had type `"
+        + type(spacing)
+        + "`.",
     )
     assert(
       type(label) == "dictionary",
-      message: "The value `" + repr(label) + "` of the `label` argument was expected"
-        + "to have type `dictionary` but instead had type `" + type(label) + "`."
+      message: "The value `"
+        + repr(label)
+        + "` of the `label` argument was expected"
+        + "to have type `dictionary` but instead had type `"
+        + type(label)
+        + "`.",
     )
     assert(
       type(line-stroke) == "length",
-      message: "The value `" + repr(line-stroke) + "` of the `line-stroke` argument was expected"
-        + "to have type `length` but instead had type `" + type(line-stroke) + "`."
+      message: "The value `"
+        + repr(line-stroke)
+        + "` of the `line-stroke` argument was expected"
+        + "to have type `length` but instead had type `"
+        + type(line-stroke)
+        + "`.",
     )
 
     // Check validity of `spacing`'s keys.
@@ -45,8 +57,15 @@
       }
       if type(value) != "length" {
         panic(
-          "The value `" + repr(value) + "` of the key `" + key + "` in the `spacing` argument `" + repr(spacing)
-          + "` was expected to have type `length` but instead had type `" + type(value) + "`."
+          "The value `"
+            + repr(value)
+            + "` of the key `"
+            + key
+            + "` in the `spacing` argument `"
+            + repr(spacing)
+            + "` was expected to have type `length` but instead had type `"
+            + type(value)
+            + "`.",
         )
       }
     }
@@ -55,14 +74,19 @@
     let mutually_exclusive(key1, key2, keys) = {
       assert(
         key1 not in keys or key2 not in keys,
-        message: "The keys `" + key1 + "` and `" + key2 + "` in the `spacing` argument `"
-          + repr(spacing) + "` are mutually exclusive."
+        message: "The keys `"
+          + key1
+          + "` and `"
+          + key2
+          + "` in the `spacing` argument `"
+          + repr(spacing)
+          + "` are mutually exclusive.",
       )
     }
     mutually_exclusive("horizontal", "h", spacing.keys())
     mutually_exclusive("vertical", "v", spacing.keys())
     mutually_exclusive("lateral", "l", spacing.keys())
-    
+
     // Check validity of `label`'s keys.
     let expected = ("offset": "length", "side": "alignment", "padding": "length")
     for (key, value) in label {
@@ -71,8 +95,17 @@
       }
       if type(value) != expected.at(key) {
         panic(
-          "The value `" + repr(value) + "` of the key `" + key + "` in the `label` argument `" + repr(label)
-          + "` was expected to have type `" + type.at(key) + "` but instead had type `" + type(value) + "`."
+          "The value `"
+            + repr(value)
+            + "` of the key `"
+            + key
+            + "` in the `label` argument `"
+            + repr(label)
+            + "` was expected to have type `"
+            + type.at(key)
+            + "` but instead had type `"
+            + type(value)
+            + "`.",
         )
       }
     }
@@ -80,7 +113,9 @@
       assert(
         label.side == left or label.side == right,
         message: "The value for the key `side` in the argument `label` can only be either "
-          + "`left` (default) or `right`, but instead was `" + repr(label.side) + "`."
+          + "`left` (default) or `right`, but instead was `"
+          + repr(label.side)
+          + "`.",
       )
     }
 
@@ -111,8 +146,13 @@
 
     assert(
       to_pop <= stack.len(),
-      message: "The rule `" + repr(rule.__prooftree_raw) + "` was expecting at least "
-        + str(to_pop) + " rules in the stack, but only " + str(stack.len()) + " were present."
+      message: "The rule `"
+        + repr(rule.__prooftree_raw)
+        + "` was expecting at least "
+        + str(to_pop)
+        + " rules in the stack, but only "
+        + str(stack.len())
+        + " were present.",
     )
 
     // Remove the children from the stack
@@ -127,7 +167,7 @@
 
   assert(
     stack.len() == 1,
-    message: "Some rule remained unmatched: " + str(stack.len()) + " roots were found but only 1 was expected."
+    message: "Some rule remained unmatched: " + str(stack.len()) + " roots were found but only 1 was expected.",
   )
 
   let last = stack.pop()
@@ -160,8 +200,12 @@
     // Check the type of `label`.
     assert(
       type(label) in ("string", "content", "none"),
-      message: "The type of the `label` argument `" + repr(label) + "` was expected to be "
-      + "`none`, `string` or `content` but was instead `" + type(label) + "`."
+      message: "The type of the `label` argument `"
+        + repr(label)
+        + "` was expected to be "
+        + "`none`, `string` or `content` but was instead `"
+        + type(label)
+        + "`.",
     )
   }
 
@@ -188,7 +232,7 @@
         let label_size = measure(label)
         let label_width = label_size.width
         let label_height = label_size.height
-        
+
         // Update width and offsets from the left
         width = calc.max(base_width, label_width)
         base_side = (width - base_width) / 2
@@ -207,7 +251,6 @@
         base_right: base_side,
         main_left: base_side,
         main_right: base_side,
-
         // Extra for draw
         body_left: base_side + settings.spacing.lateral,
         label_left: label_left,
@@ -217,34 +260,42 @@
     __prooftree_draw_func: (settings, l) => {
       // Draw body
       place(left + bottom, dx: l.body_left, body)
-      
+
       // Draw label
       if label != none {
         place(left + bottom, dx: l.label_left, dy: -l.label_bottom, label)
       }
-    }
+    },
   )
 }
 
 #let rule(
   n: 1,
   label: none,
-  root
+  root,
 ) = {
   // Check arguments
   {
     // Check validity of the `n` parameter
     assert(
       type(n) == "integer",
-      message: "The type of the `n` argument `" + repr(n) + "` was expected to be "
-      + "`integer` but was instead `" + type(n) + "`."
+      message: "The type of the `n` argument `"
+        + repr(n)
+        + "` was expected to be "
+        + "`integer` but was instead `"
+        + type(n)
+        + "`.",
     )
 
     // Check the type of `label`.
     assert(
       type(label) in ("string", "dictionary", "content", "none"),
-      message: "The type of the `label` argument `" + repr(label) + "` was expected to be "
-      + "`none`, `string`, `content` or `dictionary` but was instead `" + type(label) + "`."
+      message: "The type of the `label` argument `"
+        + repr(label)
+        + "` was expected to be "
+        + "`none`, `string`, `content` or `dictionary` but was instead `"
+        + type(label)
+        + "`.",
     )
     // If the type of `label` was string then it's good, otherwise we need to check its keys.
     if type(label) == "dictionary" {
@@ -255,8 +306,15 @@
         }
         if type(value) not in ("string", "content") {
           panic(
-            "The value `" + repr(value) + "` of the key `" + key + "` in the `label` argument `" + repr(label)
-            + "` was expected to have type `string` or `content` but instead had type `" + type(value) + "`."
+            "The value `"
+              + repr(value)
+              + "` of the key `"
+              + key
+              + "` in the `label` argument `"
+              + repr(label)
+              + "` was expected to have type `string` or `content` but instead had type `"
+              + type(value)
+              + "`.",
           )
         }
       }
@@ -277,7 +335,7 @@
       if type(label) in ("string", "content") {
         label = (
           left: if settings.label.side == left { label } else { none },
-          right: if settings.label.side == right { label } else { none }
+          right: if settings.label.side == right { label } else { none },
         )
       }
       label = (
@@ -304,16 +362,13 @@
       }
 
       // Width and height of children, and width of their combined bases
-      let children_width = children
-        .map(c => c.width)
-        .intersperse(settings.spacing.horizontal)
-        .sum()
+      let children_width = children.map(c => c.width).intersperse(settings.spacing.horizontal).sum()
       let children_height = children.map(c => c.height).fold(0pt, calc.max)
       let children_base_width = children_width - child_base_left - child_base_right
 
       // Width of the line
       let line_width = calc.max(children_base_width, base_width)
-      
+
       // Left/right offsets of lateral children main
       let (child_main_left, child_main_right) = (0pt, 0pt)
       if n != 0 {
@@ -373,7 +428,6 @@
         main_left: main_left,
         main_right: main_right,
         children_offsets: children_offsets,
-
         // Extra for draw
         label: label,
         root_left: base_left + settings.spacing.lateral,
@@ -382,16 +436,29 @@
         line_width: line_width,
         label_left: line_left - label_left_width,
         label_right: line_left + line_width + settings.label.padding,
-        label_left_bottom: root_height + settings.spacing.vertical + settings.line-stroke / 2 - label_left_height / 2 - settings.label.offset,
-        label_right_bottom: root_height + settings.spacing.vertical + settings.line-stroke / 2 - label_right_height / 2 - settings.label.offset,
+        label_left_bottom: root_height
+          + settings.spacing.vertical
+          + settings.line-stroke / 2
+          - label_left_height / 2
+          - settings.label.offset,
+        label_right_bottom: root_height
+          + settings.spacing.vertical
+          + settings.line-stroke / 2
+          - label_right_height / 2
+          - settings.label.offset,
       )
     },
     __prooftree_draw_func: (settings, l) => {
       // Draw root content
       place(left + bottom, dx: l.root_left, root)
-      
+
       // Draw line
-      place(left + bottom, dx: l.line_left, dy: -l.line_bottom, line(length: l.line_width, stroke: settings.line-stroke))
+      place(
+        left + bottom,
+        dx: l.line_left,
+        dy: -l.line_bottom,
+        line(length: l.line_width, stroke: settings.line-stroke),
+      )
 
       // Draw labels
       if l.label.left != none {
@@ -400,6 +467,6 @@
       if l.label.right != none {
         place(left + bottom, dx: l.label_right, dy: -l.label_right_bottom, l.label.right)
       }
-    }
+    },
   )
 }

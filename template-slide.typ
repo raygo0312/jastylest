@@ -1,4 +1,5 @@
-#import "@preview/polylux:0.3.1": *
+#import "@preview/polylux:0.4.0": slide as polylux-slide
+#import "@preview/polylux:0.4.0": *
 #import "template-common.typ": *
 
 // color setting
@@ -11,6 +12,13 @@
   other: state("other", rgb("#000000")),
 )
 #let preset-color = (
+  normal: (
+    title: rgb("#66a5ad"),
+    ex: rgb("#e3e2b4"),
+    axm: rgb("#f4acb7"),
+    def: rgb("#bfc8d7"),
+    thm: rgb("#a2b59f"),
+  ),
   pastel: (
     title: rgb("#fbd8b5"),
     ex: rgb("#f9f8c4"),
@@ -37,26 +45,34 @@
     }
     return
   }
-  theme-color.at(name).update(x => {
-    color
-  })
+  theme-color
+    .at(name)
+    .update(x => {
+      color
+    })
 }
-
-#let margin = 50pt
 // slide style setting
 #let slide-style(
+  handout: false,
   it,
 ) = {
   set page(
     paper: "presentation-16-9",
     width: 960pt,
     height: 540pt,
-    margin: (rest: margin),
+    margin: 50pt,
   )
   set text(
     size: 24pt,
     font: font-sans,
   )
+  // handoutをtrueにすると動的スライドを無効化
+  show: it => {
+    if handout {
+      enable-handout-mode(true)
+    }
+    it
+  }
   // title-blockのラベリング
   show ref: it => {
     if it.element != none and it.element.children.at(0).at("key") == "slide" {
@@ -74,16 +90,16 @@
 
 // セクションに関する関数
 #let section(section) = {
-  utils.register-section(section)
+  toolbox.register-section(section)
   counter("slide").step()
 }
-#let section-name = utils.current-section
+#let section-name = toolbox.current-section
 
 // make title slide
 #let title-slide(
-  title,
+  title: "",
   author: "",
-) = polylux-slide[
+) = slide[
   #set align(horizon + center)
   = #title
   #v(10pt)
@@ -92,7 +108,7 @@
 
 // make slide
 #let slide(
-  title: section-name,
+  title: "",
   verticaly: horizon,
   doc,
 ) = polylux-slide[
@@ -101,8 +117,8 @@
     hide[\$]
     place(
       top + left,
-      dx: -margin,
-      dy: -margin,
+      dx: -50pt,
+      dy: -50pt,
     )[
       #block(
         width: page.width,
@@ -118,16 +134,18 @@
   #doc
   #place(
     right + bottom,
-    dx: margin - 20pt,
-    dy: margin - 20pt,
+    dx: 50pt - 20pt,
+    dy: 50pt - 20pt,
   )[
-    #logic.logical-slide.display()/#utils.last-slide-number
+    #toolbox.slide-number/#toolbox.last-slide-number
   ]
 ]
 
 // make index slide
 #let make-index() = slide(title: "目次")[
-  #utils.polylux-outline()
+  #toolbox.all-sections((sections, current) => {
+    enum(..sections)
+  })
 ]
 
 // make block with title
