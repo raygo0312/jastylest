@@ -1,9 +1,6 @@
 #import "@local/japanese-template:0.1.0": *
 
-#show: it => slide-style(
-  // handout: true, // handoutをtrueにすると動的スライドが無効化される
-  it,
-)
+#show: jslide.with()
 
 #title-slide(
   title: "Typst",
@@ -61,16 +58,7 @@
     - third
   ]
 ]
-// これで色を変えられます
-#set page(fill: rgb("#000000"))
-#set text(fill: rgb("#ffffff"))
-#change-color(color: rgb("#483b6d"))
-#change-color(name: "ex", color: rgb("#53531f"))
-#change-color(name: "axm", color: rgb("#612828"))
-#change-color(name: "def", color: rgb("#2b4263"))
-#change-color(name: "thm", color: rgb("#2b5e24"))
-
-#section("ダークテーマ")
+#section("色の替え方")
 
 #slide[
   #title-block(
@@ -94,7 +82,9 @@
     title: "定義",
     number: true,
     color: "def",
-  )[]
+  )[
+    titleの初期値も変わります．
+  ]
   #title-block(
     title: "系・命題・補題・性質",
     number: true,
@@ -102,55 +92,30 @@
   )[]
 ]
 
-#set page(fill: rgb("#ffffff"))
-#set text(fill: rgb("#000000"))
-// 既存のテーマで色を一括に変更することもできます
-#change-color(theme: "pastel")
-#section("パステルテーマ")
-
-#slide[
+#slide(color: rgb("#ff851b"))[
   #title-block(
     title: "例",
     number: true,
-    color: "ex",
+    color: red,
   )[
-    ```typst
-    #section("セクション")
-    ```
-    でスライドにセクションを付けることができます．
+    他の色を選びたいときはcolorを指定してください．
   ]
   #title-block(
-    title: "公理",
-    number: true,
-    color: "axm",
-  )[]
-  #title-block(
-    title: "定義",
-    number: true,
-    color: "def",
-  )[]
-  #title-block(
-    title: "系・命題・補題・性質",
-    number: true,
-    color: "thm",
-  )[]
-]
-
-#slide[
-  #change-color(name: "other", color: red)
-  #title-block(
     title: "例",
     number: true,
-    color: "other",
-  )[
-    他の色を選びたいときはotherを使用してください．
-  ]
-  #change-color(name: "other", color: blue)
-  #title-block(
-    title: "例",
-    number: true,
-    color: "other",
   )[
     実はラベリングもできます．例@a のように
   ]<a>
+]
+
+#let slide = slide.with(color: blue)
+#let title-block = title-block.with(color: green)
+
+#slide[
+  #title-block(
+    title: "例",
+    number: true,
+  )[
+    こうすると，デフォルトの色を変更できます．
+  ]
 ]

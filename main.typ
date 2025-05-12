@@ -1,13 +1,13 @@
 #import "@local/japanese-template:0.1.0": *
 
-#show: it => jarticle(
-  // titlepage: true,
-  title: [Typst],
-  office: [電気通信大学 情報理工学研究科 情報数理工学],
-  author: [2400000 raygo],
-  date: true,
-  // column: true,
-  it,
+#show: jarticle.with()
+
+#maketitle(
+  titlepage: true,
+  title: [Typstの使い方],
+  office: [電気通信大学 情報・ネットワーク工学専攻],
+  author: [raygo],
+  // date: none,
 )
 
 ここに文章を入力すれば，そのまま出力されます．Latin-もいい感じにABCabcと(出力)されます．改行したい場合は\
@@ -16,7 +16,7 @@
 空行を入れると改段落できます．
 
 アクセントは\*で*太字*，\_で_italic_ができます．
-= セクション
+= セクション algo
 セクションは番号が振られます．
 = セクション
 == サブセクション
