@@ -12,7 +12,7 @@
   // リンクに下線を引く
   show link: underline
 
-  // インデント設定
+  // リスト設定
   set list(indent: 1.5em)
   set enum(indent: 1.5em)
 
@@ -151,6 +151,7 @@
   def: rgb("#bfc8d7"),
   thm: rgb("#a2b59f"),
 )
+#let slide-margin = 30pt
 // slide style setting
 #let jslide(
   handout: false, // 動的スライドを有効化(初期値:false)
@@ -164,7 +165,7 @@
     paper: paper,
     width: 960pt,
     height: 540pt,
-    margin: 50pt,
+    margin: slide-margin,
   )
   set text(
     size: font-size,
@@ -218,8 +219,8 @@
     hide[\$]
     place(
       top + left,
-      dx: -50pt,
-      dy: -50pt,
+      dx: -slide-margin,
+      dy: -slide-margin,
     )[
       #block(
         width: page.width,
@@ -241,8 +242,8 @@
   #doc
   #place(
     right + bottom,
-    dx: 50pt - 20pt,
-    dy: 50pt - 20pt,
+    dx: slide-margin - 20pt,
+    dy: slide-margin - 20pt,
   )[
     #toolbox.slide-number/#toolbox.last-slide-number
   ]
@@ -288,6 +289,9 @@
           counter("slide").display()
         }
       ]
+    }
+    #if type(color) == gradient {
+      color = color.sample(50%)
     }
     #block(
       width: 100%,

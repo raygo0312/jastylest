@@ -3,7 +3,7 @@
 #show: jarticle.with()
 
 #maketitle(
-  titlepage: true,
+  // titlepage: true,
   title: [Typstの使い方],
   office: [電気通信大学 情報・ネットワーク工学専攻],
   author: [raygo],
