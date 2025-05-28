@@ -25,14 +25,18 @@ VSCodeにどちらかの拡張機能を入れます．
 テンプレートファイルのimportには絶対パスを指定できないので，パッケージとしてあげます．詳しくは[こちら](https://github.com/typst/packages?tab=readme-ov-file#local-packages)を参照してください．
 1. dataディレクトリに`typst/packages/local/japanese-template/0.1.0/typst.toml`を作成します．
 1. 以下のコードを入力します．
-1. `typst.toml`と同じディレクトリ内にこのリポジトリを`template`という名前でシンボリックリンクを作成します．
+1. `typst.toml`と同じディレクトリ内にこのリポジトリを`package`という名前でシンボリックリンクを作成します．
 ```toml
 [package]
-name = "japanese-template"
+name = "jastylest"
 version = "0.1.0"
-entrypoint = "template/template.typ"
+entrypoint = "package/jastylest.typ"
 authors = ["raygo"]
 ```
+
+シンボリックリンクの作り方は
+- Windows(コマンドプロンプト管理者実行) : `mklink /D package <このディレクトリ>`
+- macOS/Linux : `ln -s <このディレクトリ> package`
 
 ## Tinymistの使い方
 詳しくは[こちら](https://marketplace.visualstudio.com/items?itemName=myriad-dreamin.tinymist)を参照してください．
@@ -43,5 +47,5 @@ authors = ["raygo"]
 
 ## サンプル
 
-- ドキュメントを作成したい場合は，main.typを参考にしてください．
+- ドキュメントを作成したい場合は，document.typを参考にしてください．
 - スライドを作成したい場合は，slide.typを参考にしてください．
