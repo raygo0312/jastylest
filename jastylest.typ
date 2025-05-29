@@ -1,15 +1,4 @@
-#let cal(it) = text(font: "KaTeX_Caligraphic")[#it]
-#let scr(it) = text(font: "KaTeX_Script")[#it]
-#let frak(it) = text(font: "KaTeX_Fraktur")[#it]
-
-#let problem(it) = {
-  block(inset: 10pt, width: 100%, stroke: black)[
-    *問題*
-
-    #it
-  ]
-}
-#let proof(it) = [*証明*：#it#align(right)[$square.stroked$]]
+#import "katex-font.typ" as katex-font
 
 // 共通のスタイル設定
 #let common-style(it) = {
@@ -23,24 +12,11 @@
   set list(indent: 1.5em)
   set enum(indent: 1.5em)
 
+  // 下線が文字に重ならないようにする
   set underline(offset: 0.2em)
 
   // 表のキャプションを上に
   show figure.where(kind: table): set figure.caption(position: top)
-
-  // 数式のrefを可能にする
-  show ref: it => {
-    let eq = math.equation
-    let el = it.element
-    if el != none and el.func() == eq {
-      numbering(
-        el.numbering,
-        ..counter(eq).at(el.location()),
-      )
-    } else {
-      it
-    }
-  }
 
   // 数式外の丸括弧の外側に隙間を開ける処理
   let cjk = "(\p{Hiragana}|\p{Katakana}|\p{Han})"
@@ -54,26 +30,16 @@
   // 数式とcjk文字の間に隙間を開ける処理
   show math.equation.where(block: false): it => {
     // size0にするとpreviewででかく表示されるバグがある
-    hide[#text(size: 0.00000000000001pt)[\$]]
+    hide[#text(size: 1pt)[\$]]
     it
-    hide[#text(size: 0.00000000000001pt)[\$]]
-  }
-
-  // title-blockのラベリング
-  show ref: it => {
-    if it.element != none and it.element.children.at(0).at("key") == "slide" {
-      numbering(
-        "1.1",
-        ..counter("theorem").get(),
-      )
-    }
+    hide[#text(size: 1pt)[\$]]
   }
 
   it
 }
 
 // ドキュメントのスタイル設定
-#let jarticle(
+#let article(
   seriffont: "New Computer Modern",
   seriffont-cjk: "Harano Aji Mincho",
   sansfont: "Arial",
@@ -86,6 +52,7 @@
   office: none,
   author: none,
   date: datetime.today().display("[year]年[month repr:numerical padding:none]月[day padding:none]日"),
+  abstract: none,
   it,
 ) = {
   // ページ設定
@@ -96,7 +63,7 @@
   )
   // テキスト設定
   set text(
-    font: ((name: seriffont, covers: "latin-in-cjk"), seriffont-cjk),
+    font: ((name: seriffont-cjk, covers: "latin-in-cjk"), seriffont),
     size: font-size,
     weight: "medium",
   )
@@ -104,7 +71,7 @@
   // 見出し設定
   set heading(numbering: "1.1")
   show heading: set text(
-    font: ((name: sansfont, covers: "latin-in-cjk"), sansfont-cjk),
+    font: ((name: sansfont-cjk, covers: "latin-in-cjk"), sansfont),
     weight: "medium",
   )
   show heading: it => {
@@ -129,48 +96,55 @@
 
   // タイトル生成
   if title != none {
-    align(center)[
-      #if titlepage {
-        context {
-          let pageheight = page.height
-          set text(size: 1.5em)
-          v(pageheight / 7)
-          text(size: 2em)[
-            #title
-          ]
-          v(pageheight / 7)
-          office
+    if (type(author) != array) {
+      author = (author,)
+    }
+    author = author.join(", ")
+    align(
+      center,
+      {
+        if titlepage {
+          context {
+            let pageheight = page.height
+            set text(size: 1.5em)
+            v(pageheight / 7)
+            text(size: 2em)[#title]
+            v(pageheight / 7)
+            office
+            parbreak()
+            author
+            v(pageheight / 7)
+            date
+            pagebreak()
+          }
+        } else {
+          text(size: 1.7em)[#title]
           parbreak()
-          author
-          v(pageheight / 7)
+          [#office\ #author]
+          parbreak()
           date
-          pagebreak()
+          v(1em)
         }
-      } else {
-        text(size: 1.7em)[
-          #title
-        ]
-        parbreak()
-        [#office\ #author]
-        parbreak()
-        date
-        v(1em)
-      }
-    ]
+      },
+    )
   }
 
   it
 }
 
+// ページが途中で修了したか
+#let finished = state("finished", false)
+#let totalpage = state("totalpage", 0)
+#let lastpage = state("lastpage", 0)
 // スライドのスタイル設定
-#let jslide(
+#let slide(
   font: "Arial",
   font-cjk: "Harano Aji Gothic",
   paper: "presentation-16-9",
   height: 540pt,
   font-size: 24pt,
   margin: 30pt,
-  title-color: rgb("#84c0c7"),
+  title-color: rgb("#239dad"),
   title: none,
   author: none,
   date: datetime.today().display("[year]年[month repr:numerical padding:none]月[day padding:none]日"),
@@ -184,7 +158,6 @@
   } else {
     panic("Unsupported paper size: " + paper)
   }
-  let totalpage = counter("lastpage")
 
   // ドキュメント設定
   if title != none {
@@ -198,50 +171,55 @@
     paper: paper,
     width: width,
     height: height,
-    margin: (top: 2 * margin, right: margin, bottom: margin, left: margin),
+    margin: (top: 3em, right: margin, bottom: 2em, left: margin),
     header: context {
       let page = here().page()
       let headings = query(selector(heading.where(level: 2)))
-      let pos = headings.rev().position(it => it.location().page() <= page)
+      let pos = headings.rev().position(x => x.location().page() <= page)
       let heading-index = if pos != none { headings.len() - pos - 1 } else { none }
       if heading-index != none {
         place(
           top,
           dx: -margin,
-        )[
-          #block(
+
+          block(
             width: width,
             height: 2em,
             fill: title-color,
             inset: 0.5em,
-          )[
-            #set text(1.2em, weight: "bold")
-            #headings.at(heading-index).body
-            #let multi-pages = false
-            #let heading-page = headings.at(heading-index).location().page()
-            #if headings.len() - 1 == heading-index {
-              multi-pages = heading-page != totalpage.final().at(0)
-            } else {
-              multi-pages = heading-page + 1 != headings.at(heading-index + 1).location().page()
-            }
-            #if multi-pages [
-              #numbering("(i)", page - headings.at(heading-index).location().page() + 1)
-            ]
-          ]
-        ]
+            {
+              set text(1.2em, weight: "bold")
+              headings.at(heading-index).body
+              let multi-pages = false
+              let heading-page = headings.at(heading-index).location().page()
+              if headings.len() - 1 == heading-index {
+                multi-pages = heading-page != lastpage.final()
+              } else {
+                multi-pages = heading-page + 1 != headings.at(heading-index + 1).location().page()
+              }
+              if multi-pages [
+                #numbering("(i)", page - headings.at(heading-index).location().page() + 1)
+              ]
+            },
+          ),
+        )
       }
     },
     header-ascent: 0pt,
-    footer: [
-      #set align(right)
-      #context counter(page).display("1/1", both: true)
-    ],
-    footer-descent: 0pt,
+    footer: {
+      set align(right)
+      context {
+        counter(page).display("1")
+        [/]
+        str(totalpage.final())
+      }
+    },
+    footer-descent: 0.5em,
   )
   // テキスト設定
   set text(
     size: font-size,
-    font: (font, font-cjk),
+    font: ((name: font-cjk, covers: "latin-in-cjk"), font),
   )
   // その他の設定
   set align(horizon)
@@ -250,14 +228,11 @@
     - #it
   ]
   set bibliography(title: none)
-  show heading.where(level: 1): it => context {
-    let heading-num = query(selector(heading.where(level: 1)).before(here())).len()
-    counter("title-block").update((heading-num, 0))
+  show heading.where(level: 1): it => {
     set page(header: none, footer: none)
     set align(center)
-    set text(1.2em, weight: "bold")
-    v(-10pt)
-    it.body
+    it
+    pagebreak(weak: true)
   }
   show heading.where(level: 2): pagebreak(weak: true)
 
@@ -272,9 +247,8 @@
       size: 2.0em,
       weight: "bold",
       fill: title-color,
-    )[
-      #title
-    ]
+      title,
+    )
     if author != none {
       v(1em, weak: true)
       author.join(", ")
@@ -290,19 +264,31 @@
 
   it
 
-  context totalpage.update(here().page())
+  context {
+    if not finished.get() {
+      totalpage.update(here().page())
+    }
+    lastpage.update(here().page())
+  }
+}
+
+#let finished-page() = context {
+  totalpage.update(here().page())
+  finished.update(true)
+}
+
+#let empty-slide() = {
+  set page(header: none, footer: none)
+  hide(" ")
+  pagebreak(weak: true)
 }
 
 // タイトル付きブロック
 #let title-block(
   title: none,
-  number: false,
-  title-color: rgb("#84c0c7"),
+  title-color: rgb("#239dad"),
   doc,
 ) = {
-  if number {
-    counter("title-block").step(level: 2)
-  }
   block(sticky: true)[
     #if title != none {
       block(
@@ -312,12 +298,8 @@
         inset: 10pt,
         spacing: 0pt,
         radius: (top: 5pt, bottom: 0pt),
-      )[
-        #title
-        #context if number {
-          counter("title-block").display("1.1")
-        }
-      ]
+        title,
+      )
     }
     #if type(title-color) == gradient {
       title-color = title-color.sample(50%)
@@ -329,8 +311,7 @@
       inset: 10pt,
       spacing: 0pt,
       radius: (top: 0pt, bottom: 5pt),
-    )[
-      #doc
-    ]
+      doc,
+    )
   ]
 }

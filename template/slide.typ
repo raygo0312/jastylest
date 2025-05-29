@@ -1,6 +1,8 @@
-#import "@local/jastylest:0.1.0": *
+#import "@local/jastylest:0.1.0"
+#import jastylest: title-block, empty-slide, finished-page
+#import jastylest.katex-font: * // ここを消すといつも通りのcal, frakが使えます
 
-#show: jslide.with(
+#show: jastylest.slide.with(
   // font: "Arial",
   // font-cjk: "Harano Aji Gothic",
   // paper: "presentation-4-3",
@@ -8,23 +10,45 @@
   // font-size: 24pt,
   // margin: 30pt,
   // title-color: red,
-  title: [スライドの作り方],
+  title: [jslideの使い方],
   author: ("raygo", "etc."),
   // date: none,
 )
 
 == 目次
 #outline()
-= いっこめ
 
-== タイトル
+= ここにセクションが書けます
+
+== ページを分けることができます
+こんにちは
+
+== 長い時はタイトルにナンバーが割り振られます
 
 #lorem(500)
 
-= ふたつめ
+そして中段に配置されます
 
-== aaaa
+= 二つ目のセクション
 
-== タイトル
-#title-block(title: [定理])[これは定理です]
-#title-block(title: [例], number: true, title-color: red)[色をかえられます]
+== タイトルブロック
+#title-block(title: [定理])[
+  これは定理です
+  $ forall n in NN, n + 0 = n $
+]
+#title-block(title: [例], title-color: red)[色をかえられます]
+次のページは白紙です
+
+#empty-slide()
+
+タイトルを更新しないとナンバリングが引き継がれます
+
+
+ページもここで終了しときましょう
+#finished-page()
+
+== ここからは補足
+
+補足として書くといいかもしれません
+
+

@@ -20,9 +20,15 @@ VSCodeにどちらかの拡張機能を入れます．
 
 具体的な使い方は[公式ドキュメント](https://typst.app/docs/)か解説ブログをご覧ください。
 
-## テンプレートファイル
+## このテンプレートの使い方
+次のように`import`を使ってこのテンプレートを読み込みます．
+```typst
+#import "@preview/jastylest:0.0.1"
+```
 
-テンプレートファイルのimportには絶対パスを指定できないので，パッケージとしてあげます．詳しくは[こちら](https://github.com/typst/packages?tab=readme-ov-file#local-packages)を参照してください．
+## ダウンロードする場合
+
+importには絶対パスを指定できないので，パッケージとしてあげます．詳しくは[こちら](https://github.com/typst/packages?tab=readme-ov-file#local-packages)を参照してください．
 1. dataディレクトリに`typst/packages/local/japanese-template/0.1.0/typst.toml`を作成します．
 1. 以下のコードを入力します．
 1. `typst.toml`と同じディレクトリ内にこのリポジトリを`package`という名前でシンボリックリンクを作成します．
@@ -43,7 +49,6 @@ authors = ["raygo"]
 - 右上の虫眼鏡がついているアイコンをクリックするとプレビューが開きます．
 - typstファイルの先頭にある`Export PDF`をクリックするとPDFに変換されます．
 - 設定ファイルに`"tinymist.formatterMode": "typstyle"`を書き込むとフォーマットされます．
-
 
 ## サンプル
 
