@@ -1,4 +1,4 @@
-#import "@local/jastylest:0.1.0"
+#import "@preview/jastylest:0.1.0"
 #import jastylest.katex-font: * // ここを消すと標準のcal, frakが使えます
 
 #show: jastylest.article.with(

@@ -174,36 +174,41 @@
     margin: (top: 3em, right: margin, bottom: 2em, left: margin),
     header: context {
       let page = here().page()
-      let headings = query(selector(heading.where(level: 2)))
-      let pos = headings.rev().position(x => x.location().page() <= page)
-      let heading-index = if pos != none { headings.len() - pos - 1 } else { none }
-      if heading-index != none {
-        place(
-          top,
-          dx: -margin,
-
-          block(
-            width: width,
-            height: 2em,
-            fill: title-color,
-            inset: 0.5em,
-            {
-              set text(1.2em, weight: "bold")
-              headings.at(heading-index).body
-              let multi-pages = false
-              let heading-page = headings.at(heading-index).location().page()
-              if headings.len() - 1 == heading-index {
-                multi-pages = heading-page != lastpage.final()
-              } else {
-                multi-pages = heading-page + 1 != headings.at(heading-index + 1).location().page()
-              }
-              if multi-pages [
-                #numbering("(i)", page - headings.at(heading-index).location().page() + 1)
-              ]
-            },
-          ),
-        )
+      let headings = query(selector(heading))
+      let reverse-pos = headings.rev().position(x => x.location().page() <= page)
+      if reverse-pos == none {
+        return
       }
+      let heading-index = headings.len() - reverse-pos - 1
+      let heading = headings.at(heading-index)
+      let heading-page = heading.location().page()
+      let is-multi-pages = {
+        if headings.len() - 1 == heading-index {
+          // 最後の見出しなら
+          heading-page != lastpage.final()
+        } else {
+          // 最後の見出しでないなら
+          heading-page + 1 != headings.at(heading-index + 1).location().page()
+        }
+      }
+
+      place(
+        top,
+        dx: -margin,
+        block(
+          width: width,
+          height: 2em,
+          fill: title-color,
+          inset: 0.5em,
+          {
+            set text(1.2em, weight: "bold")
+            heading.body
+            if is-multi-pages [
+              #numbering("(i)", page - heading-page + 1)
+            ]
+          },
+        ),
+      )
     },
     header-ascent: 0pt,
     footer: {

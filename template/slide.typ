@@ -1,4 +1,4 @@
-#import "@local/jastylest:0.1.0"
+#import "@preview/jastylest:0.1.0"
 #import jastylest: title-block, empty-slide, finished-page
 #import jastylest.katex-font: * // ここを消すといつも通りのcal, frakが使えます
 
@@ -37,11 +37,13 @@
   $ forall n in NN, n + 0 = n $
 ]
 #title-block(title: [例], title-color: red)[色をかえられます]
+
+== 白紙
 次のページは白紙です
 
 #empty-slide()
 
-タイトルを更新しないとナンバリングが引き継がれます
+headingを更新しないとナンバリングが引き継がれます
 
 
 ページもここで終了しときましょう
