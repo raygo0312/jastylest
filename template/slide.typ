@@ -1,5 +1,5 @@
-#import "@preview/jastylest:0.1.0"
-#import jastylest: title-block, empty-slide, finished-page
+#import "@preview/jastylest:0.1.1"
+#import jastylest: empty-slide, finished-page, title-block
 #import jastylest.katex-font: * // ここを消すといつも通りのcal, frakが使えます
 
 #show: jastylest.slide.with(
@@ -37,6 +37,9 @@
   $ forall n in NN, n + 0 = n $
 ]
 #title-block(title: [例], title-color: red)[色をかえられます]
+#title-block[
+  タイトルがなくてもよいです
+]
 
 == 白紙
 次のページは白紙です

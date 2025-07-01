@@ -49,6 +49,7 @@
   cols: 1,
   titlepage: false,
   title: none,
+  subtitle: none,
   office: none,
   author: none,
   date: datetime.today().display("[year]年[month repr:numerical padding:none]月[day padding:none]日"),
@@ -109,6 +110,10 @@
             set text(size: 1.5em)
             v(pageheight / 7)
             text(size: 2em)[#title]
+            if subtitle != none {
+              v(0.5em)
+              text(size: 1.2em)[#subtitle]
+            }
             v(pageheight / 7)
             office
             parbreak()
@@ -120,11 +125,26 @@
         } else {
           text(size: 1.7em)[#title]
           parbreak()
+          text(size: 1.2em)[#subtitle]
+          parbreak()
           [#office\ #author]
           parbreak()
           date
           v(1em)
         }
+      },
+    )
+  }
+
+  // アブストラクト生成
+  if abstract != none {
+    set text(size: 0.9em)
+    set align(center)
+    box(
+      width: 90%,
+      {
+        set align(left)
+        abstract
       },
     )
   }
@@ -146,6 +166,8 @@
   margin: 30pt,
   title-color: rgb("#239dad"),
   title: none,
+  subtitle: none,
+  office: none,
   author: none,
   date: datetime.today().display("[year]年[month repr:numerical padding:none]月[day padding:none]日"),
   it,
@@ -174,7 +196,7 @@
     margin: (top: 3em, right: margin, bottom: 2em, left: margin),
     header: context {
       let page = here().page()
-      let headings = query(selector(heading))
+      let headings = query(selector(heading.where(level: 1).or(heading.where(level: 2))))
       let reverse-pos = headings.rev().position(x => x.location().page() <= page)
       if reverse-pos == none {
         return
@@ -254,8 +276,16 @@
       fill: title-color,
       title,
     )
+    if subtitle != none {
+      v(0.5em, weak: true)
+      text(size: 1.2em, subtitle)
+    }
     if author != none {
       v(1em, weak: true)
+      if office != none {
+        office
+        linebreak()
+      }
       author.join(", ")
     }
     if date != none {

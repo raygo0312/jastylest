@@ -1,4 +1,4 @@
-#import "@preview/jastylest:0.1.0"
+#import "@preview/jastylest:0.1.1"
 #import jastylest.katex-font: * // ここを消すと標準のcal, frakが使えます
 
 #show: jastylest.article.with(
@@ -13,6 +13,7 @@
   title: [jarticleの使い方],
   office: [電気通信大学 情報・ネットワーク工学専攻],
   author: [raygo],
+  abstract: [このドキュメントは、jarticleの使い方を説明するものです。],
   // date: none, // 初期値：作成日
 )
 
