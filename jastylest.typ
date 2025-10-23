@@ -20,7 +20,7 @@
 
   // 数式外の丸括弧の外側に隙間を開ける処理
   let cjk = "(\p{Hiragana}|\p{Katakana}|\p{Han})"
-  show regex("(" + cjk + "[(])|([)]" + cjk + ")"): it => {
+  show regex("(" + cjk + "[\\(\\[]|[\\)\\]]" + cjk + ")"): it => {
     let a = it.text.match(regex("(.)(.)"))
     a.captures.at(0)
     h(0.25em)
@@ -29,10 +29,10 @@
 
   // 数式とcjk文字の間に隙間を開ける処理
   show math.equation.where(block: false): it => {
-    // size0にするとpreviewででかく表示されるバグがある
-    hide[#text(size: 1pt)[\$]]
+    let ghost = hide[#text(size: 0pt, font: "Adobe Blank", "\u{375}")] // 欧文ゴースト
+    ghost
     it
-    hide[#text(size: 1pt)[\$]]
+    ghost
   }
 
   it
