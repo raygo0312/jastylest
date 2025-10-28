@@ -1,4 +1,4 @@
-#import "@preview/jastylest:0.1.1"
+#import "@preview/jastylest:0.1.2"
 #import jastylest: empty-slide, finished-page, title-block
 #import jastylest.katex-font: * // ここを消すといつも通りのcal, frakが使えます
 

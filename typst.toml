@@ -1,14 +1,14 @@
 [package]
 name = "jastylest"
-version = "0.1.1"
+version = "0.1.2"
 compiler = "0.13.0"
 repository = "https://github.com/raygo0312/jastylest.git"
 entrypoint = "jastylest.typ"
 authors = ["raygo"]
-categories = [ "report", "paper", "presentation" ]
+categories = ["report", "paper", "presentation"]
 license = "MIT-0"
 description = "You can set up style templates for writing reports, papers, and slides in Japanese. It works similarly to LaTeX."
-keywords = [ "Japanese", "article", "slide", "cjk-latin-spacing", "cal", "scr" ]
+keywords = ["Japanese", "article", "slide", "cjk-latin-spacing", "cal", "scr"]
 
 [template]
 path = "template"
