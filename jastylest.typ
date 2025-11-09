@@ -90,7 +90,7 @@
     first-line-indent: 1em,
     justify: true,
   )
-  // Document 設定
+  // ドキュメント設定
   set document(title: title)
 
   // その他の設定
