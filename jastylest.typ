@@ -90,6 +90,8 @@
     first-line-indent: 1em,
     justify: true,
   )
+  // Document 設定
+  set document(title: title)
 
   // その他の設定
   set columns(gutter: 2em)
